@@ -211,7 +211,27 @@ margin-bottom:25px;
 
 }
 
+.back-btn{
 
+position:fixed;
+top:20px;
+left:20px;
+
+width:42px;
+height:42px;
+
+border:none;
+border-radius:50%;
+
+background:white;
+font-size:22px;
+cursor:pointer;
+
+box-shadow:0 5px 15px rgba(0,0,0,.08);
+
+z-index:99;
+
+  }
 
 </style>
 
@@ -220,7 +240,9 @@ margin-bottom:25px;
 
 <body>
 
-
+<button class="back-btn" onclick="goBack()">
+←
+</button>
 
 <div class="container">
 
@@ -320,6 +342,11 @@ window.location.href="passenger.html";
 
 };
 
+function goBack(){
+
+window.location.href="index.html";
+
+  }  
 
 </script>
 
