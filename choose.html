@@ -1,356 +1,355 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Choose Journey - PRIDE</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-
-
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Poppins',sans-serif;
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
 }
 
-
-html,
-body{
-width:100%;
-overflow-x:hidden;
+:root {
+  --green: #7ed321;
+  --green-dark: #6ab818;
+  --green-light: #f0fada;
+  --green-shadow: rgba(126, 211, 33, 0.28);
+  --text-dark: #0f1a00;
+  --text-soft: #6b7280;
+  --bg: #f7faf2;
+  --white: #ffffff;
+  --border: rgba(126, 211, 33, 0.12);
 }
 
-
-body{
-
-background:#fafcf8;
-color:#111;
-min-height:100vh;
-position:relative;
-
+html, body {
+  overflow-x: hidden;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text-dark);
 }
 
-
-body::before{
-
-content:"";
-position:fixed;
-top:-120px;
-left:-120px;
-width:300px;
-height:300px;
-border:25px solid rgba(126,211,33,.08);
-border-radius:50%;
-z-index:-1;
-
+.bg-blob {
+  position: fixed;
+  border-radius: 50%;
+  z-index: 0;
+  pointer-events: none;
+}
+.bg-blob-1 {
+  width: 380px; height: 380px;
+  top: -120px; left: -120px;
+  border: 44px solid rgba(126,211,33,0.07);
+}
+.bg-blob-2 {
+  width: 300px; height: 300px;
+  bottom: -80px; right: -80px;
+  border: 34px solid rgba(126,211,33,0.07);
+}
+.bg-blob-3 {
+  width: 180px; height: 180px;
+  top: 45%; right: 4%;
+  border: 20px solid rgba(126,211,33,0.05);
 }
 
-
-body::after{
-
-content:"";
-position:fixed;
-right:-120px;
-bottom:-120px;
-width:300px;
-height:300px;
-border:25px solid rgba(126,211,33,.08);
-border-radius:50%;
-z-index:-1;
-
+.back-btn {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  width: 44px;
+  height: 44px;
+  border: none;
+  border-radius: 50%;
+  background: white;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+  z-index: 99;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+  padding: 0;
+}
+.back-btn:hover {
+  transform: translateX(-2px);
+  box-shadow: 0 8px 22px rgba(0,0,0,0.14);
+}
+.back-btn svg {
+  display: block;
 }
 
-
-
-.container{
-
-width:100%;
-max-width:600px;
-margin:auto;
-padding:30px 20px;
-
+.page {
+  position: relative;
+  z-index: 2;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 70px 20px 40px;
 }
 
-
-
-.logo{
-
-text-align:center;
-font-size:48px;
-font-weight:800;
-letter-spacing:5px;
-color:#7ed321;
-margin-top:30px;
-
+.brand-block {
+  text-align: center;
+  margin-bottom: 28px;
+}
+.brand-name {
+  font-size: 36px;
+  font-weight: 900;
+  letter-spacing: 5px;
+  color: var(--green);
+  line-height: 1;
+}
+.brand-sub {
+  font-size: 10px;
+  letter-spacing: 3px;
+  color: var(--text-soft);
+  text-transform: uppercase;
+  margin-top: 4px;
+  font-weight: 500;
 }
 
-
-
-.subtitle{
-
-text-align:center;
-font-size:13px;
-letter-spacing:3px;
-color:#666;
-margin-top:5px;
-
+.card {
+  width: 100%;
+  max-width: 480px;
+  background: white;
+  border-radius: 28px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.07);
+  border: 1px solid #f0f0f0;
+  overflow: hidden;
 }
 
-
-
-.card{
-
-margin-top:50px;
-background:white;
-padding:30px 20px;
-border-radius:28px;
-box-shadow:0 10px 30px rgba(0,0,0,.05);
-border:1px solid #f0f0f0;
-text-align:center;
-
+.card-header {
+  padding: 30px 28px 24px;
+  text-align: center;
+  border-bottom: 1px solid #f5f5f5;
+}
+.card-header h1 {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--text-dark);
+  line-height: 1.2;
+}
+.card-header p {
+  font-size: 13px;
+  color: var(--text-soft);
+  line-height: 1.6;
+  margin-top: 8px;
 }
 
-
-
-h1{
-
-font-size:30px;
-margin-bottom:15px;
-
+.journey-options {
+  padding: 24px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
 }
 
-
-
-.main-text{
-
-font-size:14px;
-color:#666;
-line-height:1.7;
-
+.journey-btn {
+  width: 100%;
+  border: none;
+  border-radius: 18px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 0 20px;
+  height: 58px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  transition: transform 0.18s, box-shadow 0.18s;
+  text-align: left;
 }
 
-
-
-.buttons{
-
-margin-top:35px;
-display:flex;
-flex-direction:column;
-gap:15px;
-
+.journey-btn .btn-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
 }
 
-
-
-button{
-
-width:100%;
-height:58px;
-border:none;
-border-radius:18px;
-font-size:16px;
-font-weight:700;
-cursor:pointer;
-
+.journey-btn .btn-label {
+  flex: 1;
 }
 
-
-
-.driver-btn{
-
-background:#7ed321;
-color:white;
-box-shadow:0 10px 25px rgba(126,211,33,.25);
-
+.journey-btn .btn-arrow {
+  font-size: 18px;
+  opacity: 0.6;
+  transition: transform 0.18s;
 }
 
-
-
-.passenger-btn{
-
-background:white;
-color:#111;
-border:1px solid #e8e8e8;
-box-shadow:0 5px 20px rgba(0,0,0,.05);
-
+.journey-btn:hover .btn-arrow {
+  transform: translateX(3px);
+  opacity: 1;
 }
 
-
-
-.info{
-
-margin-top:35px;
-text-align:left;
-
+.driver-btn {
+  background: var(--green);
+  color: white;
+  box-shadow: 0 8px 24px var(--green-shadow);
+}
+.driver-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 32px rgba(126,211,33,0.38);
+}
+.driver-btn .btn-icon {
+  background: rgba(255,255,255,0.2);
 }
 
-
-
-.info h3{
-
-font-size:17px;
-color:#7ed321;
-margin-bottom:8px;
-
+.passenger-btn {
+  background: white;
+  color: var(--text-dark);
+  border: 1.5px solid #ebebeb;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+}
+.passenger-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(0,0,0,0.1);
+  border-color: rgba(126,211,33,0.3);
+}
+.passenger-btn .btn-icon {
+  background: var(--green-light);
 }
 
-
-
-.info p{
-
-font-size:13px;
-line-height:1.7;
-color:#666;
-margin-bottom:25px;
-
+.info-section {
+  border-top: 1px solid #f5f5f5;
+  padding: 24px 28px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
-.back-btn{
+.info-item {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
 
-position:fixed;
-top:20px;
-left:20px;
+.info-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--green);
+  margin-top: 6px;
+  flex-shrink: 0;
+}
 
-width:42px;
-height:42px;
+.info-content h3 {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--green-dark);
+  margin-bottom: 3px;
+}
 
-border:none;
-border-radius:50%;
+.info-content p {
+  font-size: 12px;
+  line-height: 1.65;
+  color: var(--text-soft);
+}
 
-background:white;
-font-size:22px;
-cursor:pointer;
-
-box-shadow:0 5px 15px rgba(0,0,0,.08);
-
-z-index:99;
-
-  }
+.footer-note {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 11px;
+  color: var(--text-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+.footer-note span {
+  color: var(--green);
+  font-weight: 600;
+}
 
 </style>
-
 </head>
-
-
 <body>
 
-<button class="back-btn" onclick="goBack()">
-←
+<div class="bg-blob bg-blob-1"></div>
+<div class="bg-blob bg-blob-2"></div>
+<div class="bg-blob bg-blob-3"></div>
+
+<button class="back-btn" onclick="window.location.href='index.html'">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M15 19L8 12L15 5" stroke="#111" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
 </button>
 
-<div class="container">
+<div class="page">
 
+  <div class="brand-block">
+    <div class="brand-name">PRIDE</div>
+    <div class="brand-sub">Pakistan Ride</div>
+  </div>
 
-<div class="logo">
-PRIDE
-</div>
+  <div class="card">
 
+    <div class="card-header">
+      <h1>Choose Your Journey</h1>
+      <p>Select how you want to continue with PRIDE.</p>
+    </div>
 
-<div class="subtitle">
-Pakistan Ride
-</div>
+    <div class="journey-options">
 
+      <button class="journey-btn driver-btn" onclick="window.location.href='driver.html'">
+        <div class="btn-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="12" r="9" stroke="white" stroke-width="1.8"/>
+            <circle cx="12" cy="12" r="2.5" fill="white"/>
+            <path d="M12 9.5V3.5" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+            <path d="M5.5 15.5L9.5 13" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+            <path d="M18.5 15.5L14.5 13" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <span class="btn-label">Journey as a Driver</span>
+        <span class="btn-arrow">→</span>
+      </button>
 
+      <button class="journey-btn passenger-btn" onclick="window.location.href='passenger.html'">
+        <div class="btn-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="7" r="3.5" stroke="#7ed321" stroke-width="1.8"/>
+            <path d="M4 20C4 16.686 7.582 14 12 14C16.418 14 20 16.686 20 20" stroke="#7ed321" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <span class="btn-label">Journey as a Passenger</span>
+        <span class="btn-arrow">→</span>
+      </button>
 
-<div class="card">
+    </div>
 
+    <div class="info-section">
 
-<h1>
-Choose Your Journey
-</h1>
+      <div class="info-item">
+        <div class="info-dot"></div>
+        <div class="info-content">
+          <h3>Journey as a Driver</h3>
+          <p>Earn money by providing rides and become a PRIDE driver partner. Flexible hours, weekly payouts, and full support.</p>
+        </div>
+      </div>
 
+      <div class="info-item">
+        <div class="info-dot"></div>
+        <div class="info-content">
+          <h3>Journey as a Passenger</h3>
+          <p>Book safe, affordable, and comfortable rides with PRIDE. Verified drivers, real-time tracking, and transparent fares.</p>
+        </div>
+      </div>
 
-<p class="main-text">
-Select how you want to continue with PRIDE.
-</p>
+    </div>
 
+  </div>
 
-
-<div class="buttons">
-
-
-<button class="driver-btn">
-Journey as a Driver
-</button>
-
-
-<button class="passenger-btn">
-Journey as a Passenger
-</button>
-
-
-</div>
-
-
-
-
-<div class="info">
-
-
-<h3>
-Journey as a Driver
-</h3>
-
-<p>
-Choose this option if you want to earn money by providing rides and become a PRIDE driver partner.
-</p>
-
-
-
-<h3>
-Journey as a Passenger
-</h3>
-
-<p>
-Choose this option if you want to book safe, affordable and comfortable rides with PRIDE.
-</p>
-
-
-</div>
-
-
+  <div class="footer-note">
+    🇵🇰 Serving Pakistan with <span>Pride</span>
+  </div>
 
 </div>
-
-
-
-</div>
-
-
-
-
-<script>
-
-
-document.querySelector(".driver-btn").onclick = () => {
-
-window.location.href="driver.html";
-
-};
-
-
-
-document.querySelector(".passenger-btn").onclick = () => {
-
-window.location.href="passenger.html";
-
-};
-
-function goBack(){
-
-window.location.href="index.html";
-
-  }  
-
-</script>
-
-
 
 </body>
   </html>
