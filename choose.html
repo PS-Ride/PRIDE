@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Choose Journey - PRIDE</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+
+html,
+body{
+width:100%;
+overflow-x:hidden;
+}
+
+
+body{
+
+background:#fafcf8;
+color:#111;
+min-height:100vh;
+position:relative;
+
+}
+
+
+body::before{
+
+content:"";
+position:fixed;
+top:-120px;
+left:-120px;
+width:300px;
+height:300px;
+border:25px solid rgba(126,211,33,.08);
+border-radius:50%;
+z-index:-1;
+
+}
+
+
+body::after{
+
+content:"";
+position:fixed;
+right:-120px;
+bottom:-120px;
+width:300px;
+height:300px;
+border:25px solid rgba(126,211,33,.08);
+border-radius:50%;
+z-index:-1;
+
+}
+
+
+
+.container{
+
+width:100%;
+max-width:600px;
+margin:auto;
+padding:30px 20px;
+
+}
+
+
+
+.logo{
+
+text-align:center;
+font-size:48px;
+font-weight:800;
+letter-spacing:5px;
+color:#7ed321;
+margin-top:30px;
+
+}
+
+
+
+.subtitle{
+
+text-align:center;
+font-size:13px;
+letter-spacing:3px;
+color:#666;
+margin-top:5px;
+
+}
+
+
+
+.card{
+
+margin-top:50px;
+background:white;
+padding:30px 20px;
+border-radius:28px;
+box-shadow:0 10px 30px rgba(0,0,0,.05);
+border:1px solid #f0f0f0;
+text-align:center;
+
+}
+
+
+
+h1{
+
+font-size:30px;
+margin-bottom:15px;
+
+}
+
+
+
+.main-text{
+
+font-size:14px;
+color:#666;
+line-height:1.7;
+
+}
+
+
+
+.buttons{
+
+margin-top:35px;
+display:flex;
+flex-direction:column;
+gap:15px;
+
+}
+
+
+
+button{
+
+width:100%;
+height:58px;
+border:none;
+border-radius:18px;
+font-size:16px;
+font-weight:700;
+cursor:pointer;
+
+}
+
+
+
+.driver-btn{
+
+background:#7ed321;
+color:white;
+box-shadow:0 10px 25px rgba(126,211,33,.25);
+
+}
+
+
+
+.passenger-btn{
+
+background:white;
+color:#111;
+border:1px solid #e8e8e8;
+box-shadow:0 5px 20px rgba(0,0,0,.05);
+
+}
+
+
+
+.info{
+
+margin-top:35px;
+text-align:left;
+
+}
+
+
+
+.info h3{
+
+font-size:17px;
+color:#7ed321;
+margin-bottom:8px;
+
+}
+
+
+
+.info p{
+
+font-size:13px;
+line-height:1.7;
+color:#666;
+margin-bottom:25px;
+
+}
+
+
+
+</style>
+
+</head>
+
+
+<body>
+
+
+
+<div class="container">
+
+
+<div class="logo">
+PRIDE
+</div>
+
+
+<div class="subtitle">
+Pakistan Ride
+</div>
+
+
+
+<div class="card">
+
+
+<h1>
+Choose Your Journey
+</h1>
+
+
+<p class="main-text">
+Select how you want to continue with PRIDE.
+</p>
+
+
+
+<div class="buttons">
+
+
+<button class="driver-btn">
+Journey as a Driver
+</button>
+
+
+<button class="passenger-btn">
+Journey as a Passenger
+</button>
+
+
+</div>
+
+
+
+
+<div class="info">
+
+
+<h3>
+Journey as a Driver
+</h3>
+
+<p>
+Choose this option if you want to earn money by providing rides and become a PRIDE driver partner.
+</p>
+
+
+
+<h3>
+Journey as a Passenger
+</h3>
+
+<p>
+Choose this option if you want to book safe, affordable and comfortable rides with PRIDE.
+</p>
+
+
+</div>
+
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+<script>
+
+
+document.querySelector(".driver-btn").onclick = () => {
+
+window.location.href="driver.html";
+
+};
+
+
+
+document.querySelector(".passenger-btn").onclick = () => {
+
+window.location.href="passenger.html";
+
+};
+
+
+</script>
+
+
+
+</body>
+  </html>
