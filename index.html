@@ -200,6 +200,19 @@ max-width:1200px;
 }
 
   }
+
+.start-btn{
+width:100%;
+padding:18px;
+border:none;
+border-radius:20px;
+background:#00c853;
+color:white;
+font-size:18px;
+font-weight:600;
+cursor:pointer;
+box-shadow:0 10px 30px rgba(0,200,83,.35);
+}
   
 </style>
 
@@ -235,15 +248,9 @@ Choose how you want to continue.
 
 <div class="action-buttons">
 
-<button class="driver-btn">
-<span>Continue as Driver</span>
+<button class="start-btn">
+Get Started
 </button>
-
-<button class="rider-btn">
-<span>Continue as Rider</span>
-</button>
-
-</div>
 
 </div>
 
@@ -278,47 +285,13 @@ alt="PRIDE Logo">
 
 <script>
 
-const driverBtn = document.querySelector(".driver-btn");
-const riderBtn = document.querySelector(".rider-btn");
+const startBtn = document.querySelector(".start-btn");
 
-driverBtn.addEventListener("click", () => {
+startBtn.onclick = () => {
 
-driverBtn.style.transform = "scale(.97)";
+window.location.href = "choose.html";
 
-setTimeout(() => {
-driverBtn.style.transform = "scale(1)";
-}, 150);
-
-// Temporary
-alert("Driver Signup Screen Coming Soon");
-
-});
-
-riderBtn.addEventListener("click", () => {
-
-riderBtn.style.transform = "scale(.97)";
-
-setTimeout(() => {
-riderBtn.style.transform = "scale(1)";
-}, 150);
-
-// Temporary
-alert("Rider Screen Coming Soon");
-
-});
-
-window.addEventListener("load", () => {
-
-document.body.style.opacity = "0";
-
-setTimeout(() => {
-
-document.body.style.transition = "opacity .8s ease";
-document.body.style.opacity = "1";
-
-}, 100);
-
-});
+};
   
 </script>
 
