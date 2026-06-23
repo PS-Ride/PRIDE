@@ -8,123 +8,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
-/* PART 2 ka CSS yahan aayega */
-</style>
-
-</head>
-<body>
-
-<div class="bg-glow"></div>
-
-<section class="hero">
-
-<div class="hero-content">
-
-<div class="brand">
-
-<div class="logo">
-PRIDE
-</div>
-
-<p class="subtitle">
-Pakistan Ride
-</p>
-
-</div>
-
-<h1>
-Ride With Pride
-</h1>
-
-<p class="description">
-Safe, reliable and affordable rides across Pakistan.
-Choose how you want to continue.
-</p>
-
-<div class="action-buttons">
-
-<button class="driver-btn">
-<span>Continue as Driver</span>
-</button>
-
-<button class="rider-btn">
-<span>Continue as Rider</span>
-</button>
-
-</div>
-
-</div>
-
-<div class="hero-image">
-
-<svg viewBox="0 0 800 600" fill="none" xmlns="http://www.w3.org/2000/svg">
-
-<circle cx="400" cy="300" r="220" fill="#00C853" opacity="0.15"/>
-
-<circle cx="400" cy="300" r="170" fill="#00C853" opacity="0.10"/>
-
-<rect x="220" y="260" width="360" height="120" rx="30" fill="#FFFFFF"/>
-
-<rect x="280" y="210" width="220" height="80" rx="20" fill="#FFFFFF"/>
-
-<circle cx="290" cy="410" r="45" fill="#111111"/>
-<circle cx="510" cy="410" r="45" fill="#111111"/>
-
-<circle cx="290" cy="410" r="20" fill="#00C853"/>
-<circle cx="510" cy="410" r="20" fill="#00C853"/>
-
-<rect x="320" y="225" width="140" height="45" rx="10" fill="#00C853"/>
-
-<rect x="235" y="290" width="70" height="35" rx="8" fill="#00C853"/>
-
-<rect x="495" y="290" width="70" height="35" rx="8" fill="#00C853"/>
-
-</svg>
-
-</div>
-
-</section>
-
-<section class="features">
-
-<div class="feature-card">
-
-<h3>Fast Booking</h3>
-
-<p>
-Book your ride in seconds with a smooth experience.
-</p>
-
-</div>
-
-<div class="feature-card">
-
-<h3>Trusted Drivers</h3>
-
-<p>
-Verified drivers for safer journeys.
-</p>
-
-</div>
-
-<div class="feature-card">
-
-<h3>Affordable Rides</h3>
-
-<p>
-Transparent pricing with no surprises.
-</p>
-
-</div>
-
-</section>
-
-<script>
-/* PART 3 ka JavaScript yahan aayega */
-</script>
-
-</body>
-  </html>
 
 *{
 margin:0;
@@ -225,17 +108,9 @@ color:#fff;
 box-shadow:0 10px 30px rgba(0,200,83,.35);
 }
 
-.driver-btn:hover{
-transform:translateY(-3px);
-}
-
 .rider-btn{
 background:#fff;
 color:#111;
-}
-
-.rider-btn:hover{
-transform:translateY(-3px);
 }
 
 .hero-image{
@@ -253,15 +128,9 @@ animation:float 4s ease-in-out infinite;
 }
 
 @keyframes float{
-0%{
-transform:translateY(0px);
-}
-50%{
-transform:translateY(-12px);
-}
-100%{
-transform:translateY(0px);
-}
+0%{transform:translateY(0);}
+50%{transform:translateY(-12px);}
+100%{transform:translateY(0);}
 }
 
 .features{
@@ -279,12 +148,6 @@ border:1px solid rgba(255,255,255,.08);
 backdrop-filter:blur(15px);
 border-radius:22px;
 padding:25px;
-transition:.3s;
-}
-
-.feature-card:hover{
-transform:translateY(-5px);
-border-color:#00c853;
 }
 
 .feature-card h3{
@@ -327,7 +190,101 @@ max-width:650px;
 grid-template-columns:repeat(3,1fr);
 max-width:1200px;
 }
-}
+
+  }
+  
+</style>
+
+</head>
+<body>
+
+<div class="bg-glow"></div>
+
+<section class="hero">
+
+<div class="hero-content">
+
+<div class="brand">
+
+<div class="logo">
+PRIDE
+</div>
+
+<p class="subtitle">
+Pakistan Ride
+</p>
+
+</div>
+
+<h1>
+Ride With Pride
+</h1>
+
+<p class="description">
+Safe, reliable and affordable rides across Pakistan.
+Choose how you want to continue.
+</p>
+
+<div class="action-buttons">
+
+<button class="driver-btn">
+<span>Continue as Driver</span>
+</button>
+
+<button class="rider-btn">
+<span>Continue as Rider</span>
+</button>
+
+</div>
+
+</div>
+
+<div class="hero-image">
+
+<svg viewBox="0 0 800 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+
+<circle cx="400" cy="300" r="220" fill="#00C853" opacity="0.15"/>
+<circle cx="400" cy="300" r="170" fill="#00C853" opacity="0.10"/>
+
+<rect x="220" y="260" width="360" height="120" rx="30" fill="#FFFFFF"/>
+<rect x="280" y="210" width="220" height="80" rx="20" fill="#FFFFFF"/>
+
+<circle cx="290" cy="410" r="45" fill="#111111"/>
+<circle cx="510" cy="410" r="45" fill="#111111"/>
+
+<circle cx="290" cy="410" r="20" fill="#00C853"/>
+<circle cx="510" cy="410" r="20" fill="#00C853"/>
+
+<rect x="320" y="225" width="140" height="45" rx="10" fill="#00C853"/>
+<rect x="235" y="290" width="70" height="35" rx="8" fill="#00C853"/>
+<rect x="495" y="290" width="70" height="35" rx="8" fill="#00C853"/>
+
+</svg>
+
+</div>
+
+</section>
+
+<section class="features">
+
+<div class="feature-card">
+<h3>Fast Booking</h3>
+<p>Book your ride in seconds with a smooth experience.</p>
+</div>
+
+<div class="feature-card">
+<h3>Trusted Drivers</h3>
+<p>Verified drivers for safer journeys.</p>
+</div>
+
+<div class="feature-card">
+<h3>Affordable Rides</h3>
+<p>Transparent pricing with no surprises.</p>
+</div>
+
+</section>
+
+<script>
 
 const driverBtn = document.querySelector(".driver-btn");
 const riderBtn = document.querySelector(".rider-btn");
@@ -340,8 +297,8 @@ setTimeout(() => {
 driverBtn.style.transform = "scale(1)";
 }, 150);
 
-// Driver signup page
-window.location.href = "driver-signup.html";
+// Temporary
+alert("Driver Signup Screen Coming Soon");
 
 });
 
@@ -353,8 +310,8 @@ setTimeout(() => {
 riderBtn.style.transform = "scale(1)";
 }, 150);
 
-// Rider page
-window.location.href = "rider-signup.html";
+// Temporary
+alert("Rider Screen Coming Soon");
 
 });
 
@@ -370,18 +327,8 @@ document.body.style.opacity = "1";
 }, 100);
 
 });
+  
+</script>
 
-const cards = document.querySelectorAll(".feature-card");
-
-cards.forEach(card => {
-
-card.addEventListener("mouseenter", () => {
-card.style.boxShadow =
-"0 15px 40px rgba(0,200,83,.25)";
-});
-
-card.addEventListener("mouseleave", () => {
-card.style.boxShadow = "none";
-});
-
-});
+</body>
+  </html>
