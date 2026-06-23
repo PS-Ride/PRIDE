@@ -3,371 +3,595 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>PRIDE - Pakistan Ride</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Poppins',sans-serif;
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
 }
 
-body{
-background:#fafcf8;
-overflow-x:hidden;
-color:#111;
-min-height:100vh;
-position:relative;
+:root {
+  --green: #7ed321;
+  --green-dark: #6ab818;
+  --green-light: #f0fada;
+  --green-glow: rgba(126, 211, 33, 0.18);
+  --green-shadow: rgba(126, 211, 33, 0.28);
+  --text-dark: #0f1a00;
+  --text-mid: #3a3a3a;
+  --text-soft: #6b7280;
+  --white: #ffffff;
+  --bg: #f7faf2;
+  --card-bg: #ffffff;
+  --border: rgba(126, 211, 33, 0.12);
 }
 
-body::before{
-content:"";
-position:fixed;
-top:-60px;
-left:-60px;
-width:280px;
-height:280px;
-border:35px solid rgba(126,211,33,.08);
-border-radius:50%;
-z-index:-1;
+html, body {
+  overflow-x: hidden;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text-dark);
 }
 
-body::after{
-content:"";
-position:fixed;
-right:-60px;
-bottom:-60px;
-width:280px;
-height:280px;
-border:25px solid rgba(126,211,33,.08);
-border-radius:50%;
-z-index:-1;
+.bg-blob {
+  position: fixed;
+  border-radius: 50%;
+  z-index: 0;
+  pointer-events: none;
+}
+.bg-blob-1 {
+  width: 420px; height: 420px;
+  top: -120px; left: -120px;
+  border: 48px solid rgba(126,211,33,0.07);
+}
+.bg-blob-2 {
+  width: 320px; height: 320px;
+  bottom: -80px; right: -80px;
+  border: 36px solid rgba(126,211,33,0.07);
+}
+.bg-blob-3 {
+  width: 200px; height: 200px;
+  top: 40%; right: 5%;
+  border: 22px solid rgba(126,211,33,0.05);
 }
 
-.bg-circle{
-position:absolute;
-right:-40px;
-top:180px;
-width:250px;
-height:250px;
-border:20px solid rgba(126,211,33,.06);
-border-radius:50%;
-z-index:0;
+.navbar {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 22px 28px 0;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-.container{
-width:100%;
-max-width:1200px;
-margin:auto;
-padding:30px 20px;
-position:relative;
-z-index:2;
+.nav-brand {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
 }
 
-.hero{
-display:flex;
-justify-content:space-between;
-align-items:center;
-gap:15px;
-padding-top:20px;
+.nav-brand .wordmark {
+  font-size: 26px;
+  font-weight: 900;
+  color: var(--green);
+  letter-spacing: 4px;
 }
 
-.left{
-width:52%;
-text-align:left;
+.nav-brand .tagline {
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 3px;
+  color: var(--text-soft);
+  text-transform: uppercase;
+  margin-top: 2px;
 }
 
-.brand{
-font-size:38px;
-font-weight:800;
-letter-spacing:3px;
-color:#7ed321;
-line-height:1;
+.nav-badge {
+  background: var(--green-light);
+  border: 1px solid var(--border);
+  color: var(--green-dark);
+  font-size: 10px;
+  font-weight: 600;
+  padding: 5px 12px;
+  border-radius: 20px;
+  letter-spacing: 0.5px;
 }
 
-.subtitle{
-font-size:11px;
-color:#444;
-letter-spacing:2px;
-margin-top:10px;
+.hero {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 38px 28px 0;
 }
 
-.hero-title{
-font-size:24px;
-font-weight:700;
-line-height:1.1;
-margin-top:15px;
+.hero-left {
+  flex: 1;
+  min-width: 0;
 }
 
-.hero-title span{
-color:#7ed321;
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--green-light);
+  border: 1px solid rgba(126,211,33,0.25);
+  color: var(--green-dark);
+  font-size: 10px;
+  font-weight: 600;
+  padding: 5px 12px;
+  border-radius: 20px;
+  letter-spacing: 0.5px;
+  margin-bottom: 16px;
 }
 
-.hero-text{
-font-size:12px;
-line-height:1.5;
-color:#666;
-max-width:180px;
-margin-top:10px;
-margin-left:0;
-margin-right:0;
+.eyebrow::before {
+  content: "";
+  width: 6px; height: 6px;
+  background: var(--green);
+  border-radius: 50%;
+  display: inline-block;
 }
 
-.start-btn{
-margin-top:15px;
-background:#7ed321;
-color:white;
-border:none;
-width:160px;
-height:46px;
-font-size:13px;
-font-weight:700;
-border-radius:14px;
-cursor:pointer;
-box-shadow:0 10px 25px rgba(126,211,33,.25);
+.hero-title {
+  font-size: clamp(26px, 6vw, 48px);
+  font-weight: 800;
+  line-height: 1.1;
+  color: var(--text-dark);
+  letter-spacing: -0.5px;
 }
 
-
-.start-btn:hover{
-transform:translateY(-3px);
-box-shadow:0 15px 35px rgba(126,211,33,.35);
+.hero-title .accent {
+  color: var(--green);
+  display: block;
 }
 
-.right{
-width:48%;
-display:flex;
-justify-content:center;
-align-items:center;
+.hero-desc {
+  font-size: clamp(11px, 2.5vw, 14px);
+  line-height: 1.65;
+  color: var(--text-soft);
+  margin-top: 14px;
+  max-width: 320px;
 }
 
-.logo-card{
-background:white;
-padding:8px;
-border-radius:28px;
-box-shadow:0 8px 20px rgba(0,0,0,.05);
-width:160px;
-height:160px;
-display:flex;
-align-items:center;
-justify-content:center;
-margin:auto;
+.hero-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 28px;
+  flex-wrap: wrap;
 }
 
-.pride-logo{
-width:135px;
-height:135px;
-object-fit:cover;
-border-radius:50%;
-display:block;
+.btn-primary {
+  background: var(--green);
+  color: white;
+  border: none;
+  padding: 0 28px;
+  height: 50px;
+  font-size: 13px;
+  font-weight: 700;
+  border-radius: 14px;
+  cursor: pointer;
+  box-shadow: 0 8px 28px var(--green-shadow);
+  transition: transform 0.2s, box-shadow 0.2s;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
 }
 
-.features{
-margin-top:25px;
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:10px;
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 36px rgba(126,211,33,0.38);
 }
 
-.feature-card{
-background:white;
-padding:12px 8px;
-border-radius:18px;
-text-align:center;
-box-shadow:0 5px 20px rgba(0,0,0,.04);
-border:1px solid #f3f3f3;
-min-height:120;  
+.trust-line {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 11px;
+  color: var(--text-soft);
+  font-weight: 500;
 }
 
-.icon-box{
-width:42px;
-height:42px;
-margin:auto;
-margin-bottom:10px;
-background:#f4fbe9;
-border-radius:18px;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:18px;
+.trust-dot {
+  width: 5px; height: 5px;
+  background: var(--green);
+  border-radius: 50%;
+  flex-shrink: 0;
 }
 
-.feature-card h3{
-font-size:12px;
-line-height:1.2;  
-margin-top:10px;
-margin-bottom:0px;
-color:#111;
-font-weight:700;
+.hero-right {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.feature-card p{
-font-size:11px;
-line-height:1.4;
-color:#666;
+.logo-wrap {
+  position: relative;
 }
 
-@media(min-width:900px){
-
-.hero{
-flex-direction:row;
-justify-content:space-between;
-align-items:center;
-padding-top:80px;
+.logo-glow {
+  position: absolute;
+  inset: -16px;
+  background: radial-gradient(circle, rgba(126,211,33,0.15) 0%, transparent 70%);
+  border-radius: 50%;
+  z-index: 0;
 }
 
-.left{
-width:50%;
-text-align:left;
+.logo-card {
+  position: relative;
+  z-index: 1;
+  background: white;
+  padding: 10px;
+  border-radius: 28px;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.08), 0 0 0 1px rgba(126,211,33,0.1);
+  width: clamp(130px, 30vw, 168px);
+  height: clamp(130px, 30vw, 168px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.hero-text{
-margin-left:0;
-margin-right:0;
+.pride-logo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
 }
 
-.right{
-width:45%;
+.stats-strip {
+  position: relative;
+  z-index: 2;
+  max-width: 1200px;
+  margin: 32px auto 0;
+  padding: 0 28px;
+  display: flex;
+  gap: 0;
+  background: white;
+  border-radius: 18px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.05);
+  border: 1px solid var(--border);
+  overflow: hidden;
 }
 
-.pride-logo{
-width:340px;
-height:340px;
+.stat-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 8px;
+  position: relative;
+  text-align: center;
 }
 
-.features{
-grid-template-columns:repeat(3,1fr);
-margin-top:120px;
+.stat-item:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  right: 0; top: 20%; bottom: 20%;
+  width: 1px;
+  background: var(--border);
 }
 
-  }  
-html{
-overflow-x:hidden;
+.stat-num {
+  font-size: clamp(16px, 4vw, 22px);
+  font-weight: 800;
+  color: var(--green);
+  line-height: 1;
 }
 
-body{
-overflow-x:hidden;
+.stat-label {
+  font-size: 9px;
+  font-weight: 500;
+  color: var(--text-soft);
+  letter-spacing: 0.3px;
+  margin-top: 3px;
 }
 
-.container{
-overflow-x:hidden;
+.features-section {
+  position: relative;
+  z-index: 2;
+  max-width: 1200px;
+  margin: 28px auto 0;
+  padding: 0 28px;
 }
 
-img{
-max-width:100%;
-  }
-  
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.feature-card {
+  background: var(--card-bg);
+  padding: 20px 14px;
+  border-radius: 20px;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+  border: 1px solid #f0f0f0;
+  transition: transform 0.2s, box-shadow 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+
+.feature-card::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--green), var(--green-dark));
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.feature-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.09);
+}
+
+.feature-card:hover::before {
+  opacity: 1;
+}
+
+.icon-box {
+  width: 46px;
+  height: 46px;
+  margin: 0 auto 12px;
+  background: var(--green-light);
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+}
+
+.feature-card h3 {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-dark);
+  line-height: 1.25;
+  margin-bottom: 6px;
+}
+
+.feature-card p {
+  font-size: 10.5px;
+  line-height: 1.5;
+  color: var(--text-soft);
+}
+
+.bottom-cta {
+  position: relative;
+  z-index: 2;
+  max-width: 1200px;
+  margin: 24px auto 32px;
+  padding: 0 28px;
+}
+
+.cta-card {
+  background: linear-gradient(135deg, var(--green) 0%, var(--green-dark) 100%);
+  border-radius: 22px;
+  padding: 28px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  box-shadow: 0 12px 40px var(--green-shadow);
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-card::before {
+  content: "";
+  position: absolute;
+  top: -40px; right: -40px;
+  width: 140px; height: 140px;
+  border: 28px solid rgba(255,255,255,0.08);
+  border-radius: 50%;
+}
+
+.cta-card::after {
+  content: "";
+  position: absolute;
+  bottom: -30px; right: 60px;
+  width: 90px; height: 90px;
+  border: 18px solid rgba(255,255,255,0.06);
+  border-radius: 50%;
+}
+
+.cta-text {
+  position: relative;
+  z-index: 1;
+}
+
+.cta-text h2 {
+  font-size: clamp(15px, 3.5vw, 20px);
+  font-weight: 800;
+  color: white;
+  line-height: 1.2;
+}
+
+.cta-text p {
+  font-size: 11px;
+  color: rgba(255,255,255,0.8);
+  margin-top: 4px;
+}
+
+.btn-white {
+  position: relative;
+  z-index: 1;
+  background: white;
+  color: var(--green-dark);
+  border: none;
+  padding: 0 22px;
+  height: 44px;
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: 12px;
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+}
+
+.btn-white:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+}
+
+@media (min-width: 640px) {
+  .hero { padding-top: 48px; }
+  .logo-card { width: 200px; height: 200px; }
+}
+
+@media (max-width: 400px) {
+  .navbar { padding: 18px 18px 0; }
+  .hero { padding: 28px 18px 0; }
+  .stats-strip { margin: 24px 18px 0; padding: 0; }
+  .features-section { padding: 0 18px; }
+  .bottom-cta { padding: 0 18px; }
+  .cta-card { flex-direction: column; text-align: center; }
+  .btn-white { width: 100%; }
+}
+
 </style>
 </head>
-
 <body>
 
-<div class="bg-circle"></div>
+<div class="bg-blob bg-blob-1"></div>
+<div class="bg-blob bg-blob-2"></div>
+<div class="bg-blob bg-blob-3"></div>
 
-<div class="container">
+<nav class="navbar">
+  <div class="nav-brand">
+    <span class="wordmark">PRIDE</span>
+    <span class="tagline">Pakistan Ride</span>
+  </div>
+  <span class="nav-badge">🇵🇰 Available Now</span>
+</nav>
 
-<div class="hero">
+<section class="hero">
+  <div class="hero-left">
+    <div class="eyebrow">Pakistan's Ride Platform</div>
+    <h1 class="hero-title">
+      Ride With
+      <span class="accent">Pride.</span>
+    </h1>
+    <p class="hero-desc">
+      Safe, reliable, and affordable rides across Pakistan.
+      Choose how you want to continue.
+    </p>
+    <div class="hero-actions">
+      <button class="btn-primary" onclick="window.location.href='choose.html'">
+        Get Started
+      </button>
+      <div class="trust-line">
+        <span class="trust-dot"></span>
+        Verified drivers only
+      </div>
+    </div>
+  </div>
 
-<div class="left">
-
-<div class="brand">
-PRIDE
-</div>
-
-<div class="subtitle">
-Pakistan Ride
-</div>
-
-<h1 class="hero-title">
-Ride With <span>Pride</span>
-</h1>
-
-<p class="hero-text">
-Safe, reliable and affordable rides across Pakistan.
-Choose how you want to continue.
-</p>
-
-<button class="start-btn">
-Get Started
-</button>
-
-</div>
-
-<div class="right">
-
-<div class="logo-card">
-
-<img src="file_000000008f00720994c8bbaf33c4374f.png"
-class="pride-logo"
-alt="PRIDE Logo">
-
-</div>
-
-</div>
-
-</div>
-
-<section class="features">
-
-<div class="feature-card">
-
-<div class="icon-box">
-⚡
-</div>
-
-<h3>Fast Booking</h3>
-
-<p>
-Book your ride in seconds with a smooth experience.
-</p>
-
-</div>
-
-<div class="feature-card">
-
-<div class="icon-box">
-🛡️
-</div>
-
-<h3>Trusted Drivers</h3>
-
-<p>
-Verified drivers for safer journeys.
-</p>
-
-</div>
-
-<div class="feature-card">
-
-<div class="icon-box">
-🏷️
-</div>
-
-<h3>Affordable Rides</h3>
-
-<p>
-Transparent pricing with no surprises.
-</p>
-
-</div>
-
+  <div class="hero-right">
+    <div class="logo-wrap">
+      <div class="logo-glow"></div>
+      <div class="logo-card">
+        <img src="logo.png" class="pride-logo" alt="PRIDE Pakistan Ride Logo">
+      </div>
+    </div>
+  </div>
 </section>
 
+<div class="stats-strip">
+  <div class="stat-item">
+    <span class="stat-num">50K+</span>
+    <span class="stat-label">Rides Done</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num">1,200+</span>
+    <span class="stat-label">Drivers</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num">20+</span>
+    <span class="stat-label">Cities</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num">4.8 ★</span>
+    <span class="stat-label">Avg Rating</span>
+  </div>
 </div>
 
-<script>
+<section class="features-section">
+  <div class="features-grid">
 
-document.querySelector(".start-btn").onclick = () => {
+    <div class="feature-card">
+      <div class="icon-box">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M13 2L4.5 13.5H11.5L11 22L19.5 10.5H12.5L13 2Z"
+            fill="#7ed321" stroke="#6ab818" stroke-width="1.2"
+            stroke-linejoin="round" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <h3>Fast Booking</h3>
+      <p>Book your ride in seconds with a smooth experience.</p>
+    </div>
 
-window.location.href = "choose.html";
+    <div class="feature-card">
+      <div class="icon-box">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2L3 6V12C3 16.418 7.03 20.489 12 22C16.97 20.489 21 16.418 21 12V6L12 2Z"
+            fill="#7ed321" stroke="#6ab818" stroke-width="1.2"
+            stroke-linejoin="round" stroke-linecap="round"/>
+          <path d="M8.5 12L10.5 14L15.5 9.5"
+            stroke="white" stroke-width="1.8"
+            stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <h3>Trusted Drivers</h3>
+      <p>Verified drivers for safer journeys.</p>
+    </div>
 
-};
+    <div class="feature-card">
+      <div class="icon-box">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M3 2L12.5 2C13.296 2 14.059 2.316 14.621 2.879L21.121 9.379C22.293 10.55 22.293 12.45 21.121 13.621L14.621 20.121C13.45 21.293 11.55 21.293 10.379 20.121L3.879 13.621C3.316 13.059 3 12.296 3 11.5V6C3 3.791 4.791 2 7 2Z"
+            fill="#7ed321" opacity="0.15" stroke="#7ed321" stroke-width="1.5"
+            stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="7.5" cy="7.5" r="1.5" fill="#7ed321"/>
+          <path d="M10 13.5C10 13.5 10.5 15 12 15C13.5 15 14 14 14 13C14 11.5 12 11 12 11C12 11 10 10.5 10 9C10 8 10.5 7 12 7C13.5 7 14 8.5 14 8.5"
+            stroke="#6ab818" stroke-width="1.3" stroke-linecap="round"/>
+          <line x1="12" y1="6" x2="12" y2="7" stroke="#6ab818" stroke-width="1.3" stroke-linecap="round"/>
+          <line x1="12" y1="15" x2="12" y2="16" stroke="#6ab818" stroke-width="1.3" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <h3>Affordable Rides</h3>
+      <p>Transparent pricing with no surprises.</p>
+    </div>
 
-</script>
+  </div>
+</section>
+
+<div class="bottom-cta">
+  <div class="cta-card">
+    <div class="cta-text">
+      <h2>Ready to ride?<br>Join PRIDE today.</h2>
+      <p>Driver or passenger — we've got you covered.</p>
+    </div>
+    <button class="btn-white" onclick="window.location.href='choose.html'">
+      Choose Your Journey →
+    </button>
+  </div>
+</div>
 
 </body>
-</html>  
+  </html>
