@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>PRIDE Passenger Dashboard</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+background:#fafcf8;
+color:#111;
+overflow-x:hidden;
+padding-bottom:90px;
+position:relative;
+min-height:100vh;
+}
+
+body::before{
+content:"";
+position:fixed;
+top:-180px;
+left:-180px;
+width:420px;
+height:420px;
+border:28px solid rgba(126,211,33,.07);
+border-radius:50%;
+z-index:-1;
+}
+
+body::after{
+content:"";
+position:fixed;
+bottom:-220px;
+right:-220px;
+width:500px;
+height:500px;
+border:28px solid rgba(126,211,33,.06);
+border-radius:50%;
+z-index:-1;
+}
+
+.container{
+max-width:550px;
+margin:auto;
+padding:18px;
+}
+
+.header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:20px;
+}
+
+.logo{
+font-size:34px;
+font-weight:800;
+letter-spacing:4px;
+color:#7ed321;
+}
+
+.profile-btn{
+width:50px;
+height:50px;
+background:#fff;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+border:1px solid #edf2e7;
+box-shadow:0 6px 20px rgba(0,0,0,.05);
+}
+
+.profile-btn svg{
+width:22px;
+height:22px;
+}
+
+.map-box{
+height:300px;
+background:linear-gradient(135deg,#f8fdf1,#edf7df);
+border-radius:30px;
+border:1px solid #e4ecd9;
+position:relative;
+overflow:hidden;
+display:flex;
+align-items:center;
+justify-content:center;
+margin-bottom:20px;
+}
+
+.map-box::before{
+content:"";
+position:absolute;
+width:220px;
+height:220px;
+border:16px solid rgba(126,211,33,.08);
+border-radius:50%;
+top:-80px;
+right:-80px;
+}
+
+.map-box::after{
+content:"";
+position:absolute;
+width:180px;
+height:180px;
+border:14px solid rgba(126,211,33,.08);
+border-radius:50%;
+bottom:-70px;
+left:-70px;
+}
+
+.map-content{
+text-align:center;
+z-index:2;
+padding:20px;
+}
+
+.map-content h2{
+font-size:30px;
+font-weight:700;
+margin-bottom:10px;
+}
+
+.map-content p{
+font-size:14px;
+color:#666;
+line-height:1.7;
+}
+
+.location-card{
+background:white;
+border-radius:24px;
+padding:20px;
+border:1px solid #f1f1f1;
+box-shadow:0 8px 25px rgba(0,0,0,.05);
+}
+
+.location-row{
+display:flex;
+align-items:center;
+gap:12px;
+padding:12px 0;
+}
+
+.location-row input{
+width:100%;
+border:none;
+outline:none;
+font-size:15px;
+font-weight:500;
+background:none;
+}
+
+.location-row svg{
+flex-shrink:0;
+}
+
+.divider{
+height:1px;
+background:#eee;
+}
+
+.book-btn{
+width:100%;
+height:58px;
+border:none;
+border-radius:18px;
+background:#7ed321;
+color:white;
+font-size:16px;
+font-weight:700;
+cursor:pointer;
+margin-top:18px;
+box-shadow:0 10px 30px rgba(126,211,33,.25);
+}
+
+.book-btn:hover{
+transform:translateY(-2px);
+}
+
+.quick-actions{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:14px;
+margin-top:20px;
+}
+
+.quick-card{
+background:white;
+padding:18px;
+border-radius:20px;
+border:1px solid #f1f1f1;
+box-shadow:0 6px 20px rgba(0,0,0,.04);
+display:flex;
+align-items:center;
+gap:12px;
+font-weight:600;
+font-size:14px;
+cursor:pointer;
+transition:.3s;
+}
+
+.quick-card:hover{
+transform:translateY(-2px);
+}
+
+.quick-icon{
+width:42px;
+height:42px;
+border-radius:12px;
+background:#f4fbe9;
+display:flex;
+align-items:center;
+justify-content:center;
+}
+
+.section-title{
+font-size:20px;
+font-weight:700;
+margin-top:28px;
+margin-bottom:14px;
+}
+
+.trip-card{
+background:white;
+padding:18px;
+border-radius:20px;
+border:1px solid #f1f1f1;
+box-shadow:0 6px 20px rgba(0,0,0,.04);
+margin-bottom:12px;
+}
+
+.trip-top{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:8px;
+}
+
+.trip-route{
+font-size:15px;
+font-weight:600;
+}
+
+.trip-price{
+font-size:14px;
+font-weight:700;
+color:#7ed321;
+}
+
+.trip-time{
+font-size:12px;
+color:#777;
+}
+
+.bottom-nav{
+position:fixed;
+bottom:0;
+left:0;
+right:0;
+height:72px;
+background:white;
+border-top:1px solid #eee;
+display:flex;
+justify-content:space-around;
+align-items:center;
+box-shadow:0 -5px 20px rgba(0,0,0,.05);
+z-index:999;
+}
+
+.nav-item{
+display:flex;
+flex-direction:column;
+align-items:center;
+gap:4px;
+font-size:11px;
+font-weight:600;
+color:#666;
+cursor:pointer;
+}
+
+.nav-item.active{
+color:#7ed321;
+}
+
+.popup{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.45);
+display:none;
+align-items:center;
+justify-content:center;
+padding:20px;
+z-index:1000;
+}
+
+.popup-box{
+background:white;
+width:100%;
+max-width:360px;
+padding:25px;
+border-radius:24px;
+text-align:center;
+}
+
+.popup-box h3{
+font-size:22px;
+margin-bottom:10px;
+}
+
+.popup-box p{
+font-size:14px;
+line-height:1.7;
+color:#666;
+}
+
+.verify-btn{
+width:100%;
+height:54px;
+border:none;
+border-radius:16px;
+background:#7ed321;
+color:white;
+font-weight:700;
+margin-top:18px;
+cursor:pointer;
+}
+
+.later-btn{
+width:100%;
+height:54px;
+border:none;
+border-radius:16px;
+background:#f4f4f4;
+font-weight:700;
+margin-top:10px;
+cursor:pointer;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="header">
+
+<div class="logo">
+PRIDE
+</div>
+
+<div class="profile-btn">
+
+<svg viewBox="0 0 24 24" fill="none">
+<circle cx="12" cy="8" r="4" stroke="#7ed321" stroke-width="2"/>
+<path d="M4 20C4 16.5 7 14 12 14C17 14 20 16.5 20 20"
+stroke="#7ed321"
+stroke-width="2"
+stroke-linecap="round"/>
+</svg>
+
+</div>
+
+</div>
+
+<div class="map-box">
+
+<div class="map-content">
+
+<h2>Where To?</h2>
+
+<p>
+Find your destination and book a ride instantly.
+</p>
+
+</div>
+
+</div>
+
+<div class="location-card">
+
+<div class="location-row">
+
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+<circle cx="12" cy="12" r="5"
+stroke="#7ed321"
+stroke-width="2"/>
+</svg>
+
+<input type="text" placeholder="Pickup Location">
+
+</div>
+
+<div class="divider"></div>
+
+<div class="location-row">
+
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+<rect x="7" y="4" width="2" height="16" fill="#7ed321"/>
+<path d="M9 5H18L15 9L18 13H9V5Z"
+fill="#7ed321"/>
+</svg>
+
+<input type="text" placeholder="Drop Location">
+
+</div>
+
+</div>
+
+<button class="book-btn">
+Book Ride
+</button>
+
+<div class="quick-actions">
+
+<div class="quick-card">
+
+<div class="quick-icon">
+
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+<path d="M3 11L12 4L21 11V20H3V11Z"
+stroke="#7ed321"
+stroke-width="2"/>
+</svg>
+
+</div>
+
+Home
+
+</div>
+
+<div class="quick-card">
+
+<div class="quick-icon">
+
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+<rect x="4" y="4" width="16" height="16"
+stroke="#7ed321"
+stroke-width="2"/>
+</svg>
+
+</div>
+
+Work
+
+</div>
+
+<div class="quick-card">
+
+<div class="quick-icon">
+
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+<rect x="3" y="6" width="18" height="12" rx="2"
+stroke="#7ed321"
+stroke-width="2"/>
+</svg>
+
+</div>
+
+Wallet
+
+</div>
+
+<div class="quick-card">
+
+<div class="quick-icon">
+
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+<circle cx="12" cy="12" r="9"
+stroke="#7ed321"
+stroke-width="2"/>
+<path d="M12 8V13"
+stroke="#7ed321"
+stroke-width="2"/>
+<circle cx="12" cy="16" r="1"
+fill="#7ed321"/>
+</svg>
+
+</div>
+
+Support
+
+</div>
+
+</div>
+
+<div class="section-title">
+Recent Trips
+</div>
+
+<div class="trip-card">
+
+<div class="trip-top">
+
+<div class="trip-route">
+Airport → Gulberg
+</div>
+
+<div class="trip-price">
+Rs.850
+</div>
+
+</div>
+
+<div class="trip-time">
+Yesterday • Completed
+</div>
+
+</div>
+
+<div class="trip-card">
+
+<div class="trip-top">
+
+<div class="trip-route">
+Johar Town → DHA
+</div>
+
+<div class="trip-price">
+Rs.620
+</div>
+
+</div>
+
+<div class="trip-time">
+2 Days Ago • Completed
+</div>
+
+</div>
+
+</div>
+
+<div class="bottom-nav">
+
+<div class="nav-item active">
+Home
+</div>
+
+<div class="nav-item">
+Trips
+</div>
+
+<div class="nav-item">
+Wallet
+</div>
+
+<div class="nav-item">
+Account
+</div>
+
+</div>
+
+<div class="popup" id="verifyPopup">
+
+<div class="popup-box">
+
+<h3>
+Verification Required
+</h3>
+
+<p>
+Please complete your KYC verification before booking rides on PRIDE.
+</p>
+
+<button class="verify-btn">
+Verify Now
+</button>
+
+<button class="later-btn" onclick="closePopup()">
+Later
+</button>
+
+</div>
+
+</div>
+
+<script>
+
+const bookBtn=document.querySelector(".book-btn");
+const popup=document.getElementById("verifyPopup");
+
+bookBtn.onclick=()=>{
+
+popup.style.display="flex";
+
+};
+
+function closePopup(){
+
+popup.style.display="none";
+
+}
+
+</script>
+
+</body>
+  </html>  
