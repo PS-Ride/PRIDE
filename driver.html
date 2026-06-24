@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Driver Signup - PRIDE</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after {
+  margin: 0; padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+:root {
+  --green: #7ed321;
+  --green-dark: #6ab818;
+  --green-light: #f0fada;
+  --green-shadow: rgba(126,211,33,0.28);
+  --text-dark: #0f1a00;
+  --text-soft: #6b7280;
+  --bg: #f7faf2;
+  --input-border: #e5e7eb;
+}
+html, body { overflow-x: hidden; min-height: 100vh; background: var(--bg); }
+.bg-blob { position: fixed; border-radius: 50%; z-index: 0; pointer-events: none; }
+.bg-blob-1 { width: 380px; height: 380px; top: -120px; left: -120px; border: 44px solid rgba(126,211,33,0.07); }
+.bg-blob-2 { width: 300px; height: 300px; bottom: -80px; right: -80px; border: 34px solid rgba(126,211,33,0.07); }
+
+.back-btn {
+  position: fixed; top: 20px; left: 20px;
+  width: 44px; height: 44px; border: none; border-radius: 50%;
+  background: white; cursor: pointer;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.10); z-index: 99;
+  display: flex; align-items: center; justify-content: center;
+  transition: transform 0.2s; padding: 0;
+}
+.back-btn:hover { transform: translateX(-2px); }
+
+.page {
+  position: relative; z-index: 2; min-height: 100vh;
+  display: flex; flex-direction: column; align-items: center;
+  padding: 70px 20px 40px;
+}
+
+.brand-block { text-align: center; margin-bottom: 24px; }
+.brand-name { font-size: 30px; font-weight: 900; letter-spacing: 5px; color: var(--green); }
+.brand-sub { font-size: 10px; letter-spacing: 3px; color: var(--text-soft); text-transform: uppercase; margin-top: 3px; font-weight: 500; }
+
+.card {
+  width: 100%; max-width: 440px;
+  background: white; border-radius: 28px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.07);
+  border: 1px solid #f0f0f0; overflow: hidden;
+}
+
+.progress-wrap { padding: 22px 28px 0; }
+.progress-steps { display: flex; align-items: center; margin-bottom: 6px; }
+.step-dot {
+  width: 30px; height: 30px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 700;
+  background: #f0f0f0; color: #aaa;
+  transition: all 0.3s; flex-shrink: 0;
+}
+.step-dot.active { background: var(--green); color: white; box-shadow: 0 4px 12px var(--green-shadow); }
+.step-dot.done { background: var(--green-dark); color: white; }
+.step-line { flex: 1; height: 2px; background: #f0f0f0; transition: background 0.3s; }
+.step-line.done { background: var(--green-dark); }
+.progress-label { font-size: 11px; color: var(--text-soft); font-weight: 500; margin-top: 4px; }
+.progress-label span { color: var(--green); font-weight: 700; }
+
+.step-content { display: none; padding: 24px 28px 28px; }
+.step-content.active { display: block; }
+.step-title { font-size: 20px; font-weight: 800; color: var(--text-dark); margin-bottom: 4px; }
+.step-desc { font-size: 12px; color: var(--text-soft); line-height: 1.6; margin-bottom: 22px; }
+
+.field { margin-bottom: 16px; }
+.field label { display: block; font-size: 12px; font-weight: 600; color: var(--text-dark); margin-bottom: 6px; }
+.field input {
+  width: 100%; height: 50px;
+  border: 1.5px solid var(--input-border); border-radius: 14px;
+  padding: 0 16px; font-size: 14px; font-weight: 500;
+  color: var(--text-dark); background: #fafafa; outline: none;
+  transition: border-color 0.2s, background 0.2s;
+}
+.field input:focus { border-color: var(--green); background: white; }
+.field input::placeholder { color: #bbb; font-weight: 400; }
+
+.phone-wrap { display: flex; gap: 10px; }
+.country-code {
+  width: 82px; height: 50px; border: 1.5px solid var(--input-border);
+  border-radius: 14px; display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 600; color: var(--text-dark);
+  background: #fafafa; flex-shrink: 0; gap: 4px;
+}
+.phone-wrap input { flex: 1; }
+
+.otp-wrap { display: flex; gap: 10px; justify-content: center; margin: 8px 0 4px; }
+.otp-input {
+  width: 54px !important; height: 58px !important;
+  text-align: center; font-size: 24px !important; font-weight: 700 !important;
+  border-radius: 14px !important; padding: 0 !important;
+  border: 1.5px solid var(--input-border); background: #fafafa;
+  outline: none; transition: border-color 0.2s;
+}
+.otp-input:focus { border-color: var(--green); background: white; }
+
+.otp-sent-info {
+  background: var(--green-light); border: 1px solid rgba(126,211,33,0.25);
+  border-radius: 12px; padding: 10px 14px;
+  font-size: 12px; color: var(--green-dark);
+  margin-bottom: 16px; text-align: center; font-weight: 500;
+}
+
+.otp-resend { text-align: center; margin-top: 12px; font-size: 12px; color: var(--text-soft); }
+.otp-resend a { color: var(--green); font-weight: 600; cursor: pointer; text-decoration: none; }
+
+.next-btn {
+  width: 100%; height: 52px; background: var(--green);
+  color: white; border: none; border-radius: 16px;
+  font-size: 15px; font-weight: 700; cursor: pointer;
+  box-shadow: 0 8px 24px var(--green-shadow);
+  transition: transform 0.2s, box-shadow 0.2s;
+  margin-top: 8px; letter-spacing: 0.3px;
+}
+.next-btn:hover { transform: translateY(-2px); box-shadow: 0 14px 32px rgba(126,211,33,0.38); }
+.next-btn:disabled { background: #ccc; box-shadow: none; cursor: not-allowed; transform: none; }
+
+.hint { text-align: center; margin-top: 14px; font-size: 11px; color: var(--text-soft); }
+.hint a { color: var(--green); font-weight: 600; text-decoration: none; }
+
+.error-msg {
+  background: #fff0f0; border: 1px solid #ffd0d0;
+  border-radius: 12px; padding: 10px 14px;
+  font-size: 12px; color: #e53e3e;
+  margin-bottom: 12px; text-align: center; display: none;
+}
+
+.loading-spinner {
+  display: inline-block; width: 18px; height: 18px;
+  border: 2px solid rgba(255,255,255,0.4);
+  border-top-color: white; border-radius: 50%;
+  animation: spin 0.8s linear infinite; vertical-align: middle; margin-right: 8px;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.success-wrap { text-align: center; padding: 10px 0 6px; }
+.success-icon {
+  width: 72px; height: 72px; background: var(--green-light);
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 18px;
+}
+.success-wrap h2 { font-size: 22px; font-weight: 800; color: var(--text-dark); margin-bottom: 8px; }
+.success-wrap p { font-size: 13px; color: var(--text-soft); line-height: 1.65; }
+</style>
+</head>
+<body>
+
+<div class="bg-blob bg-blob-1"></div>
+<div class="bg-blob bg-blob-2"></div>
+
+<button class="back-btn" onclick="prevStep()">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+    <path d="M15 19L8 12L15 5" stroke="#111" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</button>
+
+<div class="page">
+  <div class="brand-block">
+    <div class="brand-name">PRIDE</div>
+    <div class="brand-sub">Driver Signup</div>
+  </div>
+
+  <div class="card">
+    <div class="progress-wrap">
+      <div class="progress-steps">
+        <div class="step-dot active" id="dot1">1</div>
+        <div class="step-line" id="line1"></div>
+        <div class="step-dot" id="dot2">2</div>
+        <div class="step-line" id="line2"></div>
+        <div class="step-dot" id="dot3">3</div>
+        <div class="step-line" id="line3"></div>
+        <div class="step-dot" id="dot4">4</div>
+      </div>
+      <div class="progress-label">Step <span id="step-num">1</span> of 4</div>
+    </div>
+
+    <!-- STEP 1 -->
+    <div class="step-content active" id="step1">
+      <div class="step-title">Let's get started</div>
+      <div class="step-desc">Enter your details to create your driver account.</div>
+      <div class="field">
+        <label>Full Name</label>
+        <input type="text" id="d-name" placeholder="e.g. Ahmed Khan">
+      </div>
+      <div class="field">
+        <label>Email Address</label>
+        <input type="email" id="d-email" placeholder="ahmed@email.com">
+      </div>
+      <div class="field">
+        <label>Phone Number</label>
+        <div class="phone-wrap">
+          <div class="country-code">🇵🇰 +92</div>
+          <input type="tel" id="d-phone" placeholder="3XX XXXXXXX" maxlength="10">
+        </div>
+      </div>
+      <div class="error-msg" id="err1"></div>
+      <button class="next-btn" onclick="sendOTP()">Send Verification Code →</button>
+      <div class="hint">Already have an account? <a href="#">Sign in</a></div>
+    </div>
+
+    <!-- STEP 2 -->
+    <div class="step-content" id="step2">
+      <div class="step-title">Verify your email</div>
+      <div class="step-desc">Enter the 6-digit code sent to your email.</div>
+      <div class="otp-sent-info" id="otp-email-info">Code sent to your email ✉️</div>
+      <div class="otp-wrap">
+        <input class="otp-input" type="tel" maxlength="1" id="o1">
+        <input class="otp-input" type="tel" maxlength="1" id="o2">
+        <input class="otp-input" type="tel" maxlength="1" id="o3">
+        <input class="otp-input" type="tel" maxlength="1" id="o4">
+        <input class="otp-input" type="tel" maxlength="1" id="o5">
+        <input class="otp-input" type="tel" maxlength="1" id="o6">
+      </div>
+      <div class="error-msg" id="err2"></div>
+      <div class="otp-resend">Didn't receive? <a onclick="sendOTP()">Resend Code</a></div>
+      <button class="next-btn" style="margin-top:20px" onclick="verifyOTP()">Verify Code →</button>
+    </div>
+
+    <!-- STEP 3 -->
+    <div class="step-content" id="step3">
+      <div class="step-title">Vehicle details</div>
+      <div class="step-desc">Tell us about your vehicle.</div>
+      <div class="field">
+        <label>Vehicle Make & Model</label>
+        <input type="text" id="d-vehicle" placeholder="e.g. Suzuki Alto 2020">
+      </div>
+      <div class="field">
+        <label>Registration Number</label>
+        <input type="text" id="d-reg" placeholder="e.g. LHR-1234">
+      </div>
+      <div class="field">
+        <label>CNIC Number</label>
+        <input type="text" id="d-cnic" placeholder="XXXXX-XXXXXXX-X" maxlength="15">
+      </div>
+      <div class="error-msg" id="err3"></div>
+      <button class="next-btn" onclick="nextStep()">Continue →</button>
+    </div>
+
+    <!-- STEP 4 -->
+    <div class="step-content" id="step4">
+      <div class="success-wrap">
+        <div class="success-icon">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none">
+            <path d="M5 12L10 17L19 7" stroke="#7ed321" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h2>Welcome aboard! 🎉</h2>
+        <p>Your driver account has been created successfully. Our team will review your profile within 24 hours.</p>
+      </div>
+      <button class="next-btn" style="margin-top:24px" onclick="window.location.href='index.html'">Go to Home</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<script>
+emailjs.init("aXMmc7-ZNDdNqOdHi");
+const SERVICE_ID  = "service_j5b1t5h";
+const TEMPLATE_ID = "template_ldhk7ju";
+
+let current = 1;
+let generatedOTP = "";
+
+function showError(id, msg) {
+  const el = document.getElementById(id);
+  el.textContent = msg; el.style.display = "block";
+}
+function hideError(id) { document.getElementById(id).style.display = "none"; }
+
+function updateProgress() {
+  document.getElementById('step-num').textContent = Math.min(current, 4);
+  for (let i = 1; i <= 4; i++) {
+    const dot = document.getElementById('dot' + i);
+    dot.classList.remove('active','done');
+    if (i < current) { dot.classList.add('done'); dot.textContent = '✓'; }
+    else if (i === current) { dot.classList.add('active'); dot.textContent = i; }
+    else { dot.textContent = i; }
+  }
+  for (let i = 1; i <= 3; i++) {
+    document.getElementById('line' + i).classList.toggle('done', i < current);
+  }
+}
+
+function nextStep() {
+  if (current < 4) {
+    document.getElementById('step' + current).classList.remove('active');
+    current++;
+    document.getElementById('step' + current).classList.add('active');
+    updateProgress();
+    if (current === 4) document.querySelector('.back-btn').style.display = 'none';
+  }
+}
+
+function prevStep() {
+  if (current > 1) {
+    document.getElementById('step' + current).classList.remove('active');
+    current--;
+    document.getElementById('step' + current).classList.add('active');
+    updateProgress();
+  } else {
+    window.location.href = 'choose.html';
+  }
+}
+
+function generateOTP() {
+  return Math.floor(100000 + Math.random() * 900000).toString();
+}
+
+async function sendOTP() {
+  hideError('err1');
+  const name  = document.getElementById('d-name').value.trim();
+  const email = document.getElementById('d-email').value.trim();
+  const phone = document.getElementById('d-phone').value.trim();
+
+  if (!name) return showError('err1', 'Please enter your full name.');
+  if (!email || !email.includes('@')) return showError('err1', 'Please enter a valid email address.');
+  if (!phone || phone.length < 10) return showError('err1', 'Please enter a valid phone number.');
+
+  const btn = document.querySelector('#step1 .next-btn');
+  btn.innerHTML = '<span class="loading-spinner"></span>Sending...';
+  btn.disabled = true;
+
+  generatedOTP = generateOTP();
+
+  try {
+    await emailjs.send(SERVICE_ID, TEMPLATE_ID, {
+      email: email,
+      passcode: generatedOTP,
+      to_name: name,
+    });
+    document.getElementById('otp-email-info').textContent = `Code sent to ${email} ✉️`;
+    nextStep();
+  } catch (e) {
+    showError('err1', 'Failed to send code. Please try again.');
+  } finally {
+    btn.innerHTML = 'Send Verification Code →';
+    btn.disabled = false;
+  }
+}
+
+function verifyOTP() {
+  hideError('err2');
+  const entered = ['o1','o2','o3','o4','o5','o6'].map(id => document.getElementById(id).value).join('');
+  if (entered.length < 6) return showError('err2', 'Please enter all 6 digits.');
+  if (entered !== generatedOTP) return showError('err2', 'Incorrect code. Please try again.');
+  nextStep();
+}
+
+document.querySelectorAll('.otp-input').forEach((input, idx, all) => {
+  input.addEventListener('input', () => {
+    if (input.value && idx < all.length - 1) all[idx + 1].focus();
+  });
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'Backspace' && !input.value && idx > 0) all[idx - 1].focus();
+  });
+});
+
+document.getElementById('d-cnic').addEventListener('input', function() {
+  let v = this.value.replace(/\D/g,'');
+  if (v.length > 5) v = v.slice(0,5) + '-' + v.slice(5);
+  if (v.length > 13) v = v.slice(0,13) + '-' + v.slice(13);
+  this.value = v;
+});
+</script>
+</body>
+  </html>
