@@ -87,6 +87,10 @@ body::after {
   font-size: 11px;
   color: #888;
   font-weight: 400;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px;
 }
 
 .profile-btn {
@@ -287,13 +291,13 @@ body::after {
 
 .quick-actions {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 10px;
 }
 
 .quick-card {
   background: #fff;
-  padding: 16px 10px 14px;
+  padding: 18px 10px 16px;
   border-radius: 18px;
   border: 1.5px solid #eeeeee;
   box-shadow: 0 4px 16px rgba(0,0,0,.04);
@@ -311,8 +315,8 @@ body::after {
 }
 
 .quick-icon {
-  width: 44px;
-  height: 44px;
+  width: 46px;
+  height: 46px;
   border-radius: 14px;
   background: #f2fbe6;
   display: flex;
@@ -321,7 +325,7 @@ body::after {
 }
 
 .quick-label {
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 600;
   color: #333;
   text-align: center;
@@ -565,7 +569,12 @@ body::after {
     <div class="header-right">
       <div class="greeting">
         <div class="greeting-name">Sara Khan</div>
-        <div class="greeting-sub">Good morning 👋</div>
+        <div class="greeting-sub">
+          Good morning
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none">
+            <path d="M12 3V5M18.36 5.64L16.95 7.05M21 12H19M5 12H3M7.05 7.05L5.64 5.64M12 19C8.13 19 5 15.87 5 12C5 10.5 5.47 9.12 6.28 8L17.72 8C18.53 9.12 19 10.5 19 12C19 15.87 15.87 19 12 19Z" stroke="#f5a623" stroke-width="1.6" stroke-linecap="round"/>
+          </svg>
+        </div>
       </div>
       <div class="profile-btn">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
@@ -620,7 +629,7 @@ body::after {
     </div>
   </div>
 
-  <button class="book-btn">
+  <button class="book-btn" onclick="requireKYC()">
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
       <path d="M5 11L6.5 6.5H17.5L19 11" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
       <rect x="3" y="11" width="18" height="7" rx="2" stroke="white" stroke-width="1.8"/>
@@ -633,7 +642,7 @@ body::after {
   <div class="section-label">Quick Access</div>
   <div class="quick-actions">
 
-    <div class="quick-card">
+    <div class="quick-card" onclick="requireKYC()">
       <div class="quick-icon">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
           <path d="M3 11.5L12 4L21 11.5V20C21 20.552 20.552 21 20 21H15V16H9V21H4C3.448 21 3 20.552 3 20V11.5Z" stroke="#7ed321" stroke-width="1.9" stroke-linejoin="round"/>
@@ -642,32 +651,7 @@ body::after {
       <div class="quick-label">Home</div>
     </div>
 
-    <div class="quick-card">
-      <div class="quick-icon">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-          <rect x="4" y="3" width="16" height="18" rx="1.5" stroke="#7ed321" stroke-width="1.9"/>
-          <rect x="8" y="7" width="3" height="3" rx="0.5" fill="#7ed321"/>
-          <rect x="13" y="7" width="3" height="3" rx="0.5" fill="#7ed321"/>
-          <rect x="8" y="12" width="3" height="3" rx="0.5" fill="#7ed321"/>
-          <rect x="13" y="12" width="3" height="3" rx="0.5" fill="#7ed321"/>
-          <rect x="9.5" y="17" width="5" height="4" rx="0.5" fill="#7ed321"/>
-        </svg>
-      </div>
-      <div class="quick-label">Work</div>
-    </div>
-
-    <div class="quick-card">
-      <div class="quick-icon">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-          <rect x="2" y="6" width="20" height="14" rx="2" stroke="#7ed321" stroke-width="1.9"/>
-          <path d="M2 10H22" stroke="#7ed321" stroke-width="1.9"/>
-          <circle cx="17" cy="15" r="1.5" fill="#7ed321"/>
-        </svg>
-      </div>
-      <div class="quick-label">Wallet</div>
-    </div>
-
-    <div class="quick-card">
+    <div class="quick-card" onclick="requireKYC()">
       <div class="quick-icon">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
           <path d="M4 12C4 7.582 7.582 4 12 4C16.418 4 20 7.582 20 12" stroke="#7ed321" stroke-width="1.9" stroke-linecap="round"/>
@@ -745,7 +729,7 @@ body::after {
     <div class="nav-dot"></div>
   </div>
 
-  <div class="nav-item">
+  <div class="nav-item" onclick="requireKYC()">
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
       <circle cx="12" cy="12" r="9" stroke="#bbb" stroke-width="1.8"/>
       <path d="M12 7V12L15 14.5" stroke="#bbb" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
@@ -753,7 +737,7 @@ body::after {
     Trips
   </div>
 
-  <div class="nav-item">
+  <div class="nav-item" onclick="requireKYC()">
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
       <rect x="2" y="6" width="20" height="14" rx="2" stroke="#bbb" stroke-width="1.8"/>
       <path d="M2 10H22" stroke="#bbb" stroke-width="1.8"/>
@@ -762,7 +746,7 @@ body::after {
     Wallet
   </div>
 
-  <div class="nav-item">
+  <div class="nav-item" onclick="requireKYC()">
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
       <circle cx="12" cy="8" r="4" stroke="#bbb" stroke-width="1.8"/>
       <path d="M4 20C4 16.686 7.582 14 12 14C16.418 14 20 16.686 20 20" stroke="#bbb" stroke-width="1.8" stroke-linecap="round"/>
@@ -782,16 +766,26 @@ body::after {
     </div>
     <h3>Verification Required</h3>
     <p>Complete your KYC to start booking rides with PRIDE. It only takes 2 minutes.</p>
-    <button class="verify-btn">Verify Now →</button>
+    <button class="verify-btn" onclick="goToKYC()">Verify Now →</button>
     <button class="later-btn" onclick="closePopup()">Maybe Later</button>
   </div>
 </div>
 
 <script>
-  const bookBtn = document.querySelector(".book-btn");
   const popup = document.getElementById("verifyPopup");
-  bookBtn.onclick = () => { popup.style.display = "flex"; };
-  function closePopup() { popup.style.display = "none"; }
+
+  function requireKYC() {
+    popup.style.display = "flex";
+  }
+
+  function closePopup() {
+    popup.style.display = "none";
+  }
+
+  function goToKYC() {
+    window.location.href = "passenger-kyc.html";
+  }
+
   popup.onclick = (e) => { if (e.target === popup) closePopup(); };
 </script>
 
