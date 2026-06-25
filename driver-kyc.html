@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Driver Verification - PRIDE</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after {
+  margin: 0; padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+:root {
+  --green: #7ed321;
+  --green-dark: #6ab818;
+  --green-light: #f0fada;
+  --green-shadow: rgba(126,211,33,0.28);
+  --text-dark: #0f1a00;
+  --text-soft: #6b7280;
+  --bg: #f7faf2;
+  --input-border: #e5e7eb;
+}
+html, body { overflow-x: hidden; min-height: 100vh; background: var(--bg); }
+.bg-blob { position: fixed; border-radius: 50%; z-index: 0; pointer-events: none; }
+.bg-blob-1 { width: 380px; height: 380px; top: -120px; left: -120px; border: 44px solid rgba(126,211,33,0.07); }
+.bg-blob-2 { width: 300px; height: 300px; bottom: -80px; right: -80px; border: 34px solid rgba(126,211,33,0.07); }
+
+.back-btn {
+  position: fixed; top: 20px; left: 20px;
+  width: 44px; height: 44px; border: none; border-radius: 50%;
+  background: white; cursor: pointer;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.10); z-index: 99;
+  display: flex; align-items: center; justify-content: center;
+  transition: transform 0.2s; padding: 0;
+}
+.back-btn:hover { transform: translateX(-2px); }
+
+.page {
+  position: relative; z-index: 2; min-height: 100vh;
+  display: flex; flex-direction: column; align-items: center;
+  padding: 70px 20px 40px;
+}
+
+.brand-block { text-align: center; margin-bottom: 24px; }
+.brand-name { font-size: 30px; font-weight: 900; letter-spacing: 5px; color: var(--green); }
+.brand-sub { font-size: 10px; letter-spacing: 3px; color: var(--text-soft); text-transform: uppercase; margin-top: 3px; font-weight: 500; }
+
+.card {
+  width: 100%; max-width: 440px;
+  background: white; border-radius: 28px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.07);
+  border: 1px solid #f0f0f0; overflow: hidden;
+}
+
+.progress-wrap { padding: 22px 28px 0; }
+.progress-steps { display: flex; align-items: center; margin-bottom: 6px; }
+.step-dot {
+  width: 28px; height: 28px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10.5px; font-weight: 700;
+  background: #f0f0f0; color: #aaa;
+  transition: all 0.3s; flex-shrink: 0;
+}
+.step-dot.active { background: var(--green); color: white; box-shadow: 0 4px 12px var(--green-shadow); }
+.step-dot.done { background: var(--green-dark); color: white; }
+.step-line { flex: 1; height: 2px; background: #f0f0f0; transition: background 0.3s; }
+.step-line.done { background: var(--green-dark); }
+.progress-label { font-size: 11px; color: var(--text-soft); font-weight: 500; margin-top: 4px; }
+.progress-label span { color: var(--green); font-weight: 700; }
+
+.step-content { display: none; padding: 24px 28px 28px; }
+.step-content.active { display: block; }
+.step-title { font-size: 20px; font-weight: 800; color: var(--text-dark); margin-bottom: 4px; }
+.step-desc { font-size: 12px; color: var(--text-soft); line-height: 1.6; margin-bottom: 22px; }
+
+.field { margin-bottom: 16px; }
+.field label { display: block; font-size: 12px; font-weight: 600; color: var(--text-dark); margin-bottom: 6px; }
+.field input {
+  width: 100%; height: 50px;
+  border: 1.5px solid var(--input-border); border-radius: 14px;
+  padding: 0 16px; font-size: 14px; font-weight: 500;
+  color: var(--text-dark); background: #fafafa; outline: none;
+  transition: border-color 0.2s, background 0.2s;
+}
+.field input:focus { border-color: var(--green); background: white; }
+.field input::placeholder { color: #bbb; font-weight: 400; }
+
+.upload-box {
+  border: 1.5px dashed var(--input-border);
+  border-radius: 16px;
+  background: #fafafa;
+  padding: 18px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+.upload-box:hover { border-color: var(--green); background: var(--green-light); }
+.upload-box.filled { border-color: var(--green); border-style: solid; background: white; }
+.upload-box input[type="file"] {
+  position: absolute; inset: 0; opacity: 0; cursor: pointer;
+}
+.upload-icon {
+  width: 44px; height: 44px; border-radius: 12px;
+  background: var(--green-light); flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+}
+.upload-box.filled .upload-icon { background: var(--green); }
+.upload-text { flex: 1; }
+.upload-title { font-size: 13px; font-weight: 600; color: var(--text-dark); margin-bottom: 2px; }
+.upload-sub { font-size: 11px; color: var(--text-soft); }
+.upload-preview {
+  width: 44px; height: 44px; border-radius: 10px;
+  object-fit: cover; flex-shrink: 0; display: none;
+}
+.upload-box.filled .upload-preview { display: block; }
+.upload-box.filled .upload-icon { display: none; }
+.upload-check {
+  width: 20px; height: 20px; flex-shrink: 0; display: none;
+}
+.upload-box.filled .upload-check { display: block; }
+
+.vehicle-type-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+  margin-bottom: 20px;
+}
+.vehicle-card {
+  border: 1.5px solid var(--input-border); border-radius: 18px;
+  padding: 20px 10px; background: #fafafa;
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+  cursor: pointer; transition: all 0.2s;
+}
+.vehicle-card:hover { border-color: var(--green); }
+.vehicle-card.selected { border-color: var(--green); background: var(--green-light); }
+.vehicle-card-icon {
+  width: 50px; height: 50px; border-radius: 14px;
+  background: white; display: flex; align-items: center; justify-content: center;
+  transition: background 0.2s;
+}
+.vehicle-card.selected .vehicle-card-icon { background: var(--green); }
+.vehicle-card-label { font-size: 13px; font-weight: 700; color: var(--text-dark); }
+
+.ac-toggle { display: flex; gap: 10px; margin-bottom: 16px; }
+.ac-option {
+  flex: 1; height: 50px; border: 1.5px solid var(--input-border); border-radius: 14px;
+  display: flex; align-items: center; justify-content: center; gap: 7px;
+  font-size: 13px; font-weight: 600; color: var(--text-soft);
+  background: #fafafa; cursor: pointer; transition: all 0.2s;
+}
+.ac-option:hover { border-color: var(--green); }
+.ac-option.selected { border-color: var(--green); background: var(--green-light); color: var(--green-dark); }
+
+.next-btn {
+  width: 100%; height: 52px; background: var(--green);
+  color: white; border: none; border-radius: 16px;
+  font-size: 15px; font-weight: 700; cursor: pointer;
+  box-shadow: 0 8px 24px var(--green-shadow);
+  transition: transform 0.2s, box-shadow 0.2s;
+  margin-top: 8px;
+}
+.next-btn:hover { transform: translateY(-2px); box-shadow: 0 14px 32px rgba(126,211,33,0.38); }
+.next-btn:disabled { background: #ccc; box-shadow: none; cursor: not-allowed; transform: none; }
+
+.error-msg {
+  background: #fff0f0; border: 1px solid #ffd0d0;
+  border-radius: 12px; padding: 10px 14px;
+  font-size: 12px; color: #e53e3e;
+  margin-bottom: 12px; text-align: center; display: none;
+}
+
+.info-note {
+  background: var(--green-light); border: 1px solid rgba(126,211,33,0.25);
+  border-radius: 12px; padding: 12px 14px;
+  font-size: 11.5px; color: var(--green-dark);
+  margin-bottom: 18px; line-height: 1.6;
+  display: flex; gap: 8px; align-items: flex-start;
+}
+.info-note svg { flex-shrink: 0; margin-top: 1px; }
+
+.loading-spinner {
+  display: inline-block; width: 18px; height: 18px;
+  border: 2px solid rgba(255,255,255,0.4);
+  border-top-color: white; border-radius: 50%;
+  animation: spin 0.8s linear infinite; vertical-align: middle; margin-right: 8px;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.success-wrap { text-align: center; padding: 10px 0 6px; }
+.success-icon {
+  width: 72px; height: 72px; background: var(--green-light);
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 18px;
+}
+.success-wrap h2 { font-size: 22px; font-weight: 800; color: var(--text-dark); margin-bottom: 8px; }
+.success-wrap p { font-size: 13px; color: var(--text-soft); line-height: 1.65; margin-bottom: 4px; }
+.status-pill {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: #fff8e1; color: #b8860b;
+  padding: 6px 14px; border-radius: 20px;
+  font-size: 11.5px; font-weight: 600; margin-top: 14px;
+}
+</style>
+</head>
+<body>
+
+<div class="bg-blob bg-blob-1"></div>
+<div class="bg-blob bg-blob-2"></div>
+
+<button class="back-btn" onclick="prevStep()">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+    <path d="M15 19L8 12L15 5" stroke="#111" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</button>
+
+<div class="page">
+  <div class="brand-block">
+    <div class="brand-name">PRIDE</div>
+    <div class="brand-sub">Driver Verification</div>
+  </div>
+
+  <div class="card">
+    <div class="progress-wrap">
+      <div class="progress-steps">
+        <div class="step-dot active" id="dot1">1</div>
+        <div class="step-line" id="line1"></div>
+        <div class="step-dot" id="dot2">2</div>
+        <div class="step-line" id="line2"></div>
+        <div class="step-dot" id="dot3">3</div>
+        <div class="step-line" id="line3"></div>
+        <div class="step-dot" id="dot4">4</div>
+      </div>
+      <div class="progress-label">Step <span id="step-num">1</span> of 4</div>
+    </div>
+
+    <!-- STEP 1: PERSONAL INFO -->
+    <div class="step-content active" id="step1">
+      <div class="step-title">Verify your identity</div>
+      <div class="step-desc">We need a few details to keep PRIDE safe for everyone.</div>
+
+      <div class="info-note">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+          <circle cx="12" cy="12" r="9" stroke="#6ab818" stroke-width="1.8"/>
+          <path d="M12 8V8.5M12 11V16" stroke="#6ab818" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+        <span>Your information is encrypted and only used for identity verification.</span>
+      </div>
+
+      <div class="field">
+        <label>CNIC Number</label>
+        <input type="text" id="cnic" placeholder="XXXXX-XXXXXXX-X" maxlength="15">
+      </div>
+
+      <div class="field">
+        <label>Date of Birth</label>
+        <input type="date" id="dob">
+      </div>
+
+      <div class="error-msg" id="err1"></div>
+      <button class="next-btn" onclick="validateStep1()">Continue →</button>
+    </div>
+
+    <!-- STEP 2: VEHICLE DETAILS -->
+    <div class="step-content" id="step2">
+      <div class="step-title">Vehicle details</div>
+      <div class="step-desc">Select your vehicle type and tell us about it.</div>
+
+      <div class="vehicle-type-grid">
+        <div class="vehicle-card" id="vt-bike" onclick="selectVehicleType('bike')">
+          <div class="vehicle-card-icon">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
+              <circle cx="5.5" cy="17.5" r="3.5" stroke="#7ed321" stroke-width="1.8"/>
+              <circle cx="18.5" cy="17.5" r="3.5" stroke="#7ed321" stroke-width="1.8"/>
+              <path d="M5.5 17.5L9 10H13L18.5 17.5" stroke="#7ed321" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M9 10L11 6H14" stroke="#7ed321" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="14" cy="6" r="1.3" fill="#7ed321"/>
+            </svg>
+          </div>
+          <div class="vehicle-card-label">Bike</div>
+        </div>
+
+        <div class="vehicle-card" id="vt-car" onclick="selectVehicleType('car')">
+          <div class="vehicle-card-icon">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
+              <path d="M3 13L4.5 8H17L19.5 13" stroke="#7ed321" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              <rect x="2" y="13" width="19" height="6" rx="2" stroke="#7ed321" stroke-width="1.8"/>
+              <circle cx="7" cy="19.5" r="1.6" fill="#7ed321"/>
+              <circle cx="16.5" cy="19.5" r="1.6" fill="#7ed321"/>
+            </svg>
+          </div>
+          <div class="vehicle-card-label">Car</div>
+        </div>
+      </div>
+
+      <!-- BIKE FIELDS -->
+      <div id="bike-fields" style="display:none;">
+        <div class="field">
+          <label>Bike Make & Model</label>
+          <input type="text" id="bike-make" placeholder="e.g. Honda CG 125">
+        </div>
+        <div class="field">
+          <label>Registration Number</label>
+          <input type="text" id="bike-reg" placeholder="e.g. LHR-1234">
+        </div>
+        <div class="field">
+          <label>Bike Photo</label>
+          <div class="upload-box" id="box-bike-photo" onclick="document.getElementById('file-bike-photo').click()">
+            <input type="file" id="file-bike-photo" accept="image/*" onchange="handleUpload(this, 'box-bike-photo', 'img-bike-photo')">
+            <div class="upload-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <rect x="3" y="5" width="18" height="14" rx="2" stroke="#7ed321" stroke-width="1.8"/>
+                <circle cx="9" cy="11" r="2" stroke="#7ed321" stroke-width="1.6"/>
+                <path d="M3 16L8 12L12 15L16 11L21 15" stroke="#7ed321" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <img class="upload-preview" id="img-bike-photo">
+            <div class="upload-text">
+              <div class="upload-title">Upload bike photo</div>
+              <div class="upload-sub">Clear photo from the side</div>
+            </div>
+            <svg class="upload-check" viewBox="0 0 24 24" fill="none">
+              <circle cx="12" cy="12" r="11" fill="#7ed321"/>
+              <path d="M7 12.5L10.5 16L17 9" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- CAR FIELDS -->
+      <div id="car-fields" style="display:none;">
+        <div class="field">
+          <label>Car Make & Model</label>
+          <input type="text" id="car-make" placeholder="e.g. Suzuki Alto 2020">
+        </div>
+        <div class="field">
+          <label>Registration Number</label>
+          <input type="text" id="car-reg" placeholder="e.g. LHR-5678">
+        </div>
+        <div class="field">
+          <label>Air Conditioning</label>
+          <div class="ac-toggle">
+            <div class="ac-option" id="ac-yes" onclick="selectAC('yes')">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <path d="M12 2V22M12 2L9 5M12 2L15 5M4.5 7.5L19.5 16.5M4.5 7.5L8 7M4.5 7.5L5 4M19.5 16.5L16 17M19.5 16.5L19 20M19.5 7.5L4.5 16.5M19.5 7.5L16 7M19.5 7.5L19 4M4.5 16.5L8 17M4.5 16.5L5 20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+              AC
+            </div>
+            <div class="ac-option" id="ac-no" onclick="selectAC('no')">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" stroke-width="1.6"/>
+                <path d="M8 8L16 16M16 8L8 16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+              </svg>
+              Non-AC
+            </div>
+          </div>
+        </div>
+        <div class="field">
+          <label>Car Photo</label>
+          <div class="upload-box" id="box-car-photo" onclick="document.getElementById('file-car-photo').click()">
+            <input type="file" id="file-car-photo" accept="image/*" onchange="handleUpload(this, 'box-car-photo', 'img-car-photo')">
+            <div class="upload-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <rect x="3" y="5" width="18" height="14" rx="2" stroke="#7ed321" stroke-width="1.8"/>
+                <circle cx="9" cy="11" r="2" stroke="#7ed321" stroke-width="1.6"/>
+                <path d="M3 16L8 12L12 15L16 11L21 15" stroke="#7ed321" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <img class="upload-preview" id="img-car-photo">
+            <div class="upload-text">
+              <div class="upload-title">Upload car photo</div>
+              <div class="upload-sub">Clear photo from the front</div>
+            </div>
+            <svg class="upload-check" viewBox="0 0 24 24" fill="none">
+              <circle cx="12" cy="12" r="11" fill="#7ed321"/>
+              <path d="M7 12.5L10.5 16L17 9" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="error-msg" id="err2"></div>
+      <button class="next-btn" onclick="validateStep2()">Continue →</button>
+    </div>
+
+    <!-- STEP 3: DOCUMENTS -->
+    <div class="step-content" id="step3">
+      <div class="step-title">Upload documents</div>
+      <div class="step-desc">We need to verify your identity and license.</div>
+
+      <div class="field">
+        <label>CNIC Front Side</label>
+        <div class="upload-box" id="box-front" onclick="document.getElementById('file-front').click()">
+          <input type="file" id="file-front" accept="image/*" onchange="handleUpload(this, 'box-front', 'img-front')">
+          <div class="upload-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+              <rect x="3" y="5" width="18" height="14" rx="2" stroke="#7ed321" stroke-width="1.8"/>
+              <circle cx="9" cy="11" r="2" stroke="#7ed321" stroke-width="1.6"/>
+              <path d="M3 16L8 12L12 15L16 11L21 15" stroke="#7ed321" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <img class="upload-preview" id="img-front">
+          <div class="upload-text">
+            <div class="upload-title">Upload front side</div>
+            <div class="upload-sub">JPG or PNG, max 5MB</div>
+          </div>
+          <svg class="upload-check" viewBox="0 0 24 24" fill="none">
+            <circle cx="12" cy="12" r="11" fill="#7ed321"/>
+            <path d="M7 12.5L10.5 16L17 9" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>CNIC Back Side</label>
+        <div class="upload-box" id="box-back" onclick="document.getElementById('file-back').click()">
+          <input type="file" id="file-back" accept="image/*" onchange="handleUpload(this, 'box-back', 'img-back')">
+          <div class="upload-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+              <rect x="3" y="5" width="18" height="14" rx="2" stroke="#7ed321" stroke-width="1.8"/>
+              <circle cx="9" cy="11" r="2" stroke="#7ed321" stroke-width="1.6"/>
+              <path d="M3 16L8 12L12 15L16 11L21 15" stroke="#7ed321" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <img class="upload-preview" id="img-back">
+          <div class="upload-text">
+            <div class="upload-title">Upload back side</div>
+            <div class="upload-sub">JPG or PNG, max 5MB</div>
+          </div>
+          <svg class="upload-check" viewBox="0 0 24 24" fill="none">
+            <circle cx="12" cy="12" r="11" fill="#7ed321"/>
+            <path d="M7 12.5L10.5 16L17 9" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Driving License</label>
+        <div class="upload-box" id="box-license" onclick="document.getElementById('file-license').click()">
+          <input type="file" id="file-license" accept="image/*" onchange="handleUpload(this, 'box-license', 'img-license')">
+          <div class="upload-icon">
+            <svg width="20" height="20" viewBox="
